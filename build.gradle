@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '4.0.3'
+}
+
+application {
+    mainClassName = 'ai.clarity.poc.performance.matrices.App'
+    version = '0.1.0-SNAPSHOT'
+    sourceCompatibility = 1.8
+}
+
+dependencies {
+
+    implementation("org.ejml:ejml-all:0.37") 
+    implementation("colt:colt:1.2.0")
+
+    // JMH
+    implementation("org.openjdk.jmh:jmh-core:1.21")
+    annotationProcessor("org.openjdk.jmh:jmh-generator-annprocess:1.21")
+
+    // JUnit Jupiter API and TestEngine implementation
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.1.1")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.1.1")
+}
+
+// This custom task is to explain how to execute the benchmarks
+task jmhRun {
+    dependsOn run
+}
+
+// This custom task is to explain how to pack the benchmarks into a fat jar
+task jmhJar {
+    dependsOn shadowJar
+}
+
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+
